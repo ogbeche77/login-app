@@ -2,7 +2,16 @@
     <div class="col-md-6 m-auto">
       <div class="card card-body">
         <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
-       
+        <!--The code below display either success/error mesg when user try to register and redirected to login page-->
+        <!--This code was first declared in messages.ejs-->
+        <% if(success_msg != " ") { %>
+          <%= success_msg %>
+      <% } %>
+      
+      
+      <% if(error_msg != " ") { %>
+          <%= error_msg %>
+      <% } %>
         <form action="/users/login" method="POST">
           <div class="form-group">
             <label for="email">Email</label>

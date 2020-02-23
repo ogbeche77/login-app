@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs"); //encryting password
-
+const passport = require("passport");
 
 
 // User model
@@ -9,7 +9,7 @@ const User = require("../models/User");
 
 
 
-//SignIn Page
+//login Page
 router.get("/login", (req, res)=> res.render("Login"));
 
 
@@ -91,6 +91,22 @@ router.post("/register",(req, res)=>{
         });
 
     }
+});
+
+// Login Handle
+router.post ("/login", (req, res, next) => {
+    passport.authenticate("local", {
+        successRedirect: "/dashboard",
+        failureRedirect: "/users/login",
+        failureFlash: true
+    }) (req, res, next);
+});
+
+//Logout Handle functionality from dashboard page, redirects to login page
+router.get("/logout", (req, res)=>{
+req.logout();
+req.flash("success_msg", "You are now logged out");
+res.redirect ("/users/login");
 });
 
 

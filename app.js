@@ -3,8 +3,15 @@ const expressLayouts = require("express-ejs-layouts"); //initialize ejs in app.j
 const mongoose = require("mongoose"); //we introduce mongoose
 const flash = require("connect-flash");
 const session = require("express-session");
+const passport = require ("passport");
 
 const app = express();
+
+// Passport config
+require("./config/passport") (passport);
+
+
+
 
 // Database config
 const db = require("./config/keys").MongoURI;
@@ -18,8 +25,12 @@ mongoose.connect (db, { useNewUrlParser: true})
 //EJS
 //add middleware
 app.use(expressLayouts);
+
+
+
 //set view engine to ejs
 app.set ("view engine", "ejs");
+
 
 //Bodyparser
 app.use(express.urlencoded({ extended: false}));
@@ -31,13 +42,18 @@ app.use(session({
     saveUninitialized: true,
   }));
 
+  //Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
   //connect flash middleware, to display msg in login page
   app.use(flash());
 
   //Global vars
   app.use((req, res, next)=>{
-      res.locals.success_msg = req.flash("success_msg");
-      res.locals.error_msg = req.flash("error_msg");
+      res.locals.success_msg = req.flash("success_msg"); // for registration flash
+      res.locals.error_msg = req.flash("error_msg");  // for registration flash
+      res.locals.error = req.flash("error"); //for login flash
       next();
   });
 

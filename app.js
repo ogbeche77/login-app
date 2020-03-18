@@ -5,6 +5,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require ("passport");
 
+
 const app = express();
 
 // Passport config
@@ -27,10 +28,18 @@ mongoose.connect (db, { useNewUrlParser: true})
 app.use(expressLayouts);
 
 
-
 //set view engine to ejs
+
 app.set ("view engine", "ejs");
 
+
+
+
+/*
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+*/
 
 //Bodyparser
 app.use(express.urlencoded({ extended: false}));

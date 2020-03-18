@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Sign In Page Page </title>
+
+
+</head>
+<body>
+<form action ="/" method="POST" id="form"> <!--posting jquery data using ajax-->
+		<div id="item1">
+		<label><b>Username/Email</b></label>
+		<input type="text" placeholder="Username/Email" name="uname" required>
+
+		<label><b>Password</b></label>
+		<input type="password" placeholder="Password" name="psw" required>
+
+		<button type="submit">Login</button>
+		<input type="checkbox" checked="checked"> Remember Me
+		
+	</div>
+
+	<div id="item2">
+		<button type="button" class="cancelbtn">Cancel</button>
+		<span id="item3"><a href="#">Forgot password?</a></span>
+	</div>
+</form>
+<!---jquery CDN-->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(()=>{
+	$("#form").submit((e)=>{  //submit handler takes callback function that has events as parameter
+		e.preventDefault();
+		$.ajax({   	//this post json data back to the server
+			url : "/ ", 	//endpoint in the server
+			type : "post", //kind of http request
+			contentType :"application/json",
+			data : JSON.stringify($("#form").serializeArray()),
+			success : (response)=>{
+				console.log("sucessful");
+				console.log(response);
+			}
+		});
+	})
+}) </script>
+
+
+</body>
